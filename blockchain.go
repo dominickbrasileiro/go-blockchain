@@ -34,7 +34,6 @@ func (b Blockchain) IsValid() bool {
 		if currentBlock.Hash != currentBlock.CalculateHash() {
 			return false
 		}
-
 	}
 
 	return true
