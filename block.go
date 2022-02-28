@@ -9,8 +9,10 @@ import (
 	"time"
 )
 
+type BlockData map[string]interface{}
+
 type Block struct {
-	Data         map[string]interface{}
+	Data         BlockData
 	Hash         string
 	PreviousHash string
 	Timestamp    time.Time
