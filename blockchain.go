@@ -22,6 +22,24 @@ func (b *Blockchain) AddBlock(data BlockData) {
 	b.Chain = append(b.Chain, newBlock)
 }
 
+func (b Blockchain) IsValid() bool {
+	for i := range b.Chain[1:] {
+		previousBlock := b.Chain[i]
+		currentBlock := b.Chain[i+1]
+
+		if currentBlock.PreviousHash != previousBlock.Hash {
+			return false
+		}
+
+		if currentBlock.Hash != currentBlock.CalculateHash() {
+			return false
+		}
+
+	}
+
+	return true
+}
+
 func CreateBlockchain(difficulty int) Blockchain {
 	genesisBlock := Block{
 		Hash:      "0",
