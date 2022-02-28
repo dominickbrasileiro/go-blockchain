@@ -1,6 +1,12 @@
 package main
 
-import "time"
+import (
+	"crypto/sha256"
+	"encoding/json"
+	"fmt"
+	"strconv"
+	"time"
+)
 
 type Block struct {
 	Data         map[string]interface{}
@@ -8,4 +14,14 @@ type Block struct {
 	PreviousHash string
 	Timestamp    time.Time
 	Pow          int
+}
+
+func (b Block) CalculateHash() string {
+	data, _ := json.Marshal(b.Data)
+
+	dataToHash := b.PreviousHash + string(data) + b.Timestamp.String() + strconv.Itoa(b.Pow)
+
+	hash := sha256.Sum256([]byte(dataToHash))
+
+	return fmt.Sprintf("%x", hash)
 }
